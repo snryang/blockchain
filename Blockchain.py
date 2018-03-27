@@ -34,12 +34,12 @@ class Blockchain(object):
     def proof_of_work(self,last_proof):
         proof=0
         while self.valid_proof(last_proof,proof) is False:
-            proof++
+            proof+=1
         return proof
     
     @staticmethod
     def valid_proof(last_proof,proof):
-        guess=f'{last_block}{proof}'.encode()
+        guess=  "{}{}".format(last_block, proof).encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
 
