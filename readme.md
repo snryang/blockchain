@@ -4,6 +4,11 @@
 关于 私钥 公钥 钱包地址的解释：https://zhuanlan.zhihu.com/p/28196364
 
 
+### 参考文档
+- https://0dayzh.gitbooks.io/bitcoin_developer_guide/content/  比特币开发者指南
+- https://yeasy.gitbooks.io/blockchain_guide/content/ 区块链技术指南
+
+
 
 learn blockchain 
 
