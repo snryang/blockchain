@@ -58,7 +58,7 @@ App = {
      * Replace me...
      */
     var adoptionInstance;
-    App.contracts.Adoption.depolyed().then(function(instance){
+    App.contracts.Adoption.deployed().then(function(instance){
       adoptionInstance = instance;
       return adoptionInstance.getAdopters.call();
     }).then(function(adopters){
@@ -83,7 +83,7 @@ App = {
         console.log(error);
       }
       var account = accounts[0];
-      App.contracts.Adoption.depolyed().then(function(instance){
+      App.contracts.Adoption.deployed().then(function(instance){
         adoptionInstance = instance;
         return adoptionInstance.adopt(petId,{from:account});
       }).then(function(result){
