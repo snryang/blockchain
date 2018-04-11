@@ -10,3 +10,27 @@
 $ curl -fsSL get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh --mirror Aliyun
 ```
+
+下载ubuntu16.04版本Docker镜像，和git类似
+docker pull ubuntu:16.04  
+运行镜像
+docker run -it --rm \
+ubuntu:16.04 \
+bash
+
+--rm 参数：容器退出后将其删除，节省空间，默认情况下并不会删除，可以执行命令 docker rm
+列出已经下载的镜像 ls 和linux列出目录内容一样
+docker image ls   
+清除虚悬镜像，官方镜像重命名，放弃了旧的名称
+docker image ls -f dangling=true  或者 docker image prune
+查看中间层镜像
+docker image ls -a
+对容器内容修改之后执行以下命令将容器保存为镜像
+docker commit \
+--author "Tao Wang <twang2218@gmail.com>" \
+--message "修改了默认网页" \
+webserver \
+nginx:v2
+
+- Union FS 最多127层 写Dockerfile时需要注意
+- 执行Docker命令和普通的linux命令不一样，docker是c/s设计，执行run指令时，经常会需要将一些本地文件传到服务器，然后在服务器端进行构建
