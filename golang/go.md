@@ -8,10 +8,10 @@
 - select case 针对通道会被阻塞，如果有default则流程变为非阻塞方式。
 
 ### 第八章 单元测试
-` go
+``` golang
 server := mockServer()
 defer server.Close()
-`
-- defer这类代码设计非常爽，避免代码分支写很多的server.Close()语句
+```
+- defer这个代码设计非常爽，避免代码分支写很多的server.Close()语句
 - 如果包使用"_test"这种方式命名,不与文件夹名称保持一致，测试代码只能访问包里公开的标识符。即便测试代码文件和被测试的代码放在同一个文件夹中，也只能访问公开的标识符。
 - 基准测试函数必须以 Benchmark 开头，接受一个指向 testing.B 类型的指针作为唯一参数。
