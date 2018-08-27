@@ -5,3 +5,11 @@
 - 
 
 ### 第七章 并发模式
+- select case 针对通道会被阻塞，如果有default则流程变为非阻塞方式。
+
+### 第八章 单元测试
+` go
+server := mockServer()
+defer server.Close()
+`
+- defer这类代码设计非常爽，避免代码分支写很多的server.Close()语句
