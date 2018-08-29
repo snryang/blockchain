@@ -1,22 +1,25 @@
 package main
 import (
-	"bytes"
 	"fmt"
-	"unicode"
-	"strings"
+	"sort"
+	"bufio"
+	"os"
 )
 
 func main(){
-	var ch byte
-	fmt.Println(strings.FieldsFunc("  foo bar  baz   ", unicode.IsSpace))
-	fmt.Scanf("%c\n",&ch)
-	var buffer bytes.Buffer
-	err := buffer.WriteByte(ch)
-	if err== nil{
-		fmt.Println("写入一个字节成功，准备读取该字节")
-		newCH,_ :=buffer.ReadByte()
-		fmt.Printf("读取的字节: %c\n",newCH)
-	}else{
-		fmt.Println("写入错误");
-	}
+	GuessingGame()
+}
+
+func GuessingGame() {
+	stdin := bufio.NewReader(os.Stdin)
+	var s string
+    fmt.Printf("Pick an integer from 0 to 100.\n")
+    answer := sort.Search(100, func(i int) bool {
+		fmt.Printf("Is your number <= %d? ", i)
+		fmt.Fscan(stdin, &s)
+		//fmt.Scanf("%s", &s)
+		fmt.Println(s)
+        return s[0] == 'y'
+    })
+    fmt.Printf("Your number is %d.\n", answer)
 }
