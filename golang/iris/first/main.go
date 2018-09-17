@@ -22,8 +22,9 @@ func main(){
 	app.Use(recover.New())
 	app.Use(logger.New())
 
+
 	app.Handle("GET","/",func(ctx iris.Context){
-		ctx.HTML("<h1>Welcome Handle GET</h1>")
+		ctx.WriteString("<h1>Welcome Handle GET</h1>")
 	})
 
 	app.Get("/ping",func(ctx iris.Context){
