@@ -61,10 +61,18 @@ lisa.notify()
 - 1.5^ Go语言的运行时默认会为每个可用的物理处理器分配一个逻辑处理器
 - 并发（concurrency）不是并行（parallelism）。并行是让不同的代码片段同时在不同的物理处理器上执行。并行的关键是同时做很多事情，而并发是指同时管理很多事情，这些事情可能只做了一半就被暂停去做别的事情了。在很多情况下，并发的效果比并行好，因为操作系统和硬件的总资源一般很少，但能支持系统同时做很多事情。这种“使用较少的资源做更多的事情”的哲学，也是指导 Go 语言设计的哲学。
 - 当通道关闭后，goroutine 依旧可以从通道接收数据，但是不能再向通道里发送数据。能够从已经关闭的通道接收数据这一点非常重要，因为这允许通道关闭后依旧能取出其中缓冲的全部值，而不会有数据丢失。
-- 
+``` golang
+	court := make(chan int)
+	go player("One", court)
+	go player("Two", court)
+	go player("Three", court)	
+	court <- 1
+```
+- 三个协助，那一个先接收通道的值是不确定的。
 
 ### 第七章 并发模式
 - select case 针对通道会被阻塞，如果有default则流程变为非阻塞方式。
+- https://github.com/goinaction/code/blob/master/chapter7/patterns/pool/pool.go 代码存在问题，没有体现资源池的作用，应该使用https://github.com/snryang/blockchain/blob/master/golang/pool.go 的代码替换
 
 ### 第八章 单元测试
 ``` golang
