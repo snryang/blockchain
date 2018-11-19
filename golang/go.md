@@ -106,4 +106,17 @@ fmt.Println(r.Replace("This is <b>HTML</b>!"))
 ## 《Go语言标准库践》
 https://books.studygolang.com/The-Golang-Standard-Library-by-Example/
 
+## 《Go語言聖經》
+http://gobook.io/read/github.com/lunny/gopl-zh/ 
 
+## 《深入解析GO》
+- defer是在return之前执行的,defer表达式可能会在设置函数返回值之后，在返回到调用函数之前，修改返回值，使最终的函数返回值与你想象的不一致。return语句不是一条原子调用，return xxx其实是赋值＋ret指令
+
+### Goroutine调度
+- Go的调度的实现，涉及到几个重要的数据结构。运行时库用这几个数据结构来实现goroutine的调度，管理goroutine和物理线程的运行。这些数据结构分别是结构体G，结构体M，结构体P，以及Sched结构体。前三个的定义在文件runtime/runtime.h中，而Sched的定义在runtime/proc.c中。Go语言的调度相关实现也是在文件proc.c中。
+- 结构体G，描述goroutine信息，如：goid,栈基址，栈指针，使用sched保存上下文，参数，fnstart 运行的函数等。
+- 结构体M，machine的缩写，是对机器的抽象。每个M都是对应到一条操作系统的物理线程,M必须关联了P才可以执行Go代码，但是当它处理阻塞或者系统调用中时，可以不需要关联P。
+- 结构体M中有两个G是需要关注一下的，一个是curg，代表结构体M当前绑定的结构体G。另一个是g0，是带有调度栈的goroutine，这是一个比较特殊的goroutine。普通的goroutine的栈是在堆上分配的可增长的栈，而g0的栈是M对应的线程的栈。所有调度相关的代码，会先切换到g0该goroutine的栈中再执行。
+- 结构体P，go1.1中新加入的一个数据结构，Processor的缩写，目的是为了提高Go程序的并发度，实现更好好的调度。
+- 结构体P 中有一个goroutine局部队列，当P执行Go代码时，它会优先从自己的这个局部队列中取，这时可以不用加锁，提高了并发度。如果发现这个队列空了，则去其它P的队列中拿一半过来，这样实现工作流窃取的调度。这种情况下是需要给调用器加锁的。
+- Sched：大多数需要的信息都已放在了结构体M、G和P中，Sched结构体只是一个壳，Sched结构体中的Lock是非常必须的，如果M或P等做一些非局部的操作，它们一般需要先锁住调度器。

@@ -1,20 +1,19 @@
 package main
 
 import (
-	"expvar"
 	"fmt"
-	"net/http"
 )
 
-var visits = expvar.NewInt("visits")
+func main() {
+	ywb := f(10)
+	fmt.Println(ywb())
+	fmt.Println(ywb())
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	visits.Add(1)
-	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
-func main() {
-	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8080", nil)
-
+func f(i int) func() int {
+	return func() int {
+		i++
+		return i
+	}
 }
